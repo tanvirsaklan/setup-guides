@@ -1,4 +1,4 @@
-# The Ultimate Guide for the Workflow 💯
+### The Ultimate Guide for the Workflow 💯
 # Development 🛠️ > Home Lab 🔐 > Production Server 🛡️
 
 *This file is about automating the workflow of a Full-Stack Developer. In some cases, it will also help the Dev-Ops engineers. You don't need to follow every step of it (Unless you are new to deployment). You are also welcome to contribute to this setup guide so that it become one of the finest setup guide for django-developers and Dev-Ops Engineers.*
@@ -341,9 +341,10 @@ git add remote origin "https://github.com/username/repo.git"
 
 ```bash
 sudo mkdir -p /opt/git
+sudo chown -R user:user /opt/git
 cd /opt/git
 sudo git init --bare repo.git
-sudo chown -R user:user /opt/git
+cd repo.git && git branch -m main && cd ..
 ```
 
 This will create a bare git repository in the server as we did in the github.
