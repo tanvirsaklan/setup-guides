@@ -185,6 +185,9 @@ Create nginx conf files for projects: `sudo nano /etc/nginx/sites-available/proj
 server{
     listen 127.0.0.1:80;
     server_name site-domain.extension;
+    client_max_body_size 999M;
+    client_body_timeout 300s;
+    send_timeout 300s;
     access_log /var/log/nginx/project.access.log;
     error_log /var/log/nginx/project.error.log;
 

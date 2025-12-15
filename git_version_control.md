@@ -51,13 +51,19 @@ python3 manage.py collectstatic --noinput
 python3 manage.py makemigrations --noinput
 python3 manage.py migrate --noinput
 deactivate
-systemctl daemon-reload && systemctl restart repo
+sudo systemctl daemon-reload && sudo systemctl restart repo
 ```
 
 Make this script executable:
 
 ```bash
 sudo chmod +x /srv/git/repo.git/hooks/post-receive
+```
+
+Make sure systemctl runs without password by user:
+
+```bash
+user ALL=(root) NOPASSWD: /bin/systemctl
 ```
 
 ---
