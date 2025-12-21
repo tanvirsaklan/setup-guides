@@ -45,7 +45,7 @@ sudo cp /root/.cloudflared/cert.pem ~/.cloudflared/cert.pem
 Now create a tunnel from terminal, browser is not needed:
 
 ```bash
-sudo cloudflared tunnel create <tunnel-name>
+cloudflared tunnel create <tunnel-name>
 ```
 
 You will be given a UUID for the tunnel. You may copy the tunnel id. We will use that later. A file is created `~/.cloudflared/<tunnel-id>.json`

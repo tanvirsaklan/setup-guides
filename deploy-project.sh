@@ -91,12 +91,14 @@ DB_USER="$DB_USER"
 DB_PASSWORD="$DB_PASS"
 DB_HOST="127.0.0.1"
 DB_PORT="6432"
+EMAIL_HOST_USER=''
+EMAIL_HOST_PASSWORD=''
 EOF
     chmod 600 "$PROJECT_ENV_FILE"
 
     echo "Running Django Migrations..."
     python3 manage.py collectstatic --noinput
-    python3 manage.py makemigarations
+    python3 manage.py makemigrations
     python3 manage.py migrate
 
     mkdir -p logs
@@ -138,12 +140,12 @@ server {
     location = /favicon.ico { access_log off; log_not_found off; }
     
     location /static/ {
-        alias $PROJECT_DIRECTORY/static;
+        alias $PROJECT_DIRECTORY/static/;
         expires 30d;
     }
 
     location /media/ {
-        alias $PROJECT_DIRECTORY/media;
+        alias $PROJECT_DIRECTORY/media/;
         expires 30d;
     }
 
