@@ -32,26 +32,43 @@ If you want to auto-deploy your code with every push, then edit `sudo nano /srv/
 
 ```bash
 #!/bin/bash
-DEPOLY_DIR=/home/user/repo    #Adjust dir as your choice, but this is recommended
-GIT_DIR=/srv/git/repo.git
+set -e
 
-echo "Deploying latest code to $DEPLOY_DIR"
+# ===== CONFIG =====
+REPO_NAME="mse"
+USER_NAME="uch"
+DEPLOY_DIR="/home/${USER_NAME}/${REPO_NAME}"
+GIT_DIR="/home/${USER_NAME}/github/${REPO_NAME}.git"
+SERVICE_NAME="${REPO_NAME}.service"
+BRANCH="main"
+# ==================
 
-if [ ! -d "$DEPLOY_DIR" ]; then
-    git clone $GIT_DIR $DEPLOY_DIR
+echo "Deploying latest code to ${DEPLOY_DIR}"
+
+if [ ! -d "${DEPLOY_DIR}" ]; then
+    git clone "${GIT_DIR}" "${DEPLOY_DIR}"
 else
-    cd $DEPLOY_DIR
-    git pull origin main
+    cd "${DEPLOY_DIR}"
+    git pull origin "${BRANCH}"
 fi
 
-cd $DEPLOY_DIR
+cd "${DEPLOY_DIR}"
+
+# Activate virtual environment
 source venv/bin/activate
+
 pip install -r requirements.txt
 python3 manage.py collectstatic --noinput
 python3 manage.py makemigrations --noinput
 python3 manage.py migrate --noinput
+
 deactivate
-sudo systemctl daemon-reload && sudo systemctl restart repo
+
+# Restart service
+sudo systemctl daemon-reload
+sudo systemctl restart "${SERVICE_NAME}"
+
+echo "Deployment of ${REPO_NAME} completed successfully."
 ```
 
 Make this script executable:
@@ -60,7 +77,7 @@ Make this script executable:
 sudo chmod +x /srv/git/repo.git/hooks/post-receive
 ```
 
-Make sure systemctl runs without password by user:
+Make sure systemctl runs without password by user `sudo visudo`:
 
 ```bash
 user ALL=(root) NOPASSWD: /bin/systemctl
