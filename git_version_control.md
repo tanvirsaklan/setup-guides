@@ -41,34 +41,45 @@ DEPLOY_DIR="/home/${USER_NAME}/${REPO_NAME}"
 GIT_DIR="/home/${USER_NAME}/github/${REPO_NAME}.git"
 SERVICE_NAME="${REPO_NAME}.service"
 BRANCH="main"
+VENV_DIR="${DEPLOY_DIR}/venv"
+PYTHON="${VENV_DIR}/bin/python"
+PIP="${VENV_DIR}/bin/pip"
 # ==================
 
-echo "Deploying latest code to ${DEPLOY_DIR}"
+echo "🚀 Deploying ${REPO_NAME} to ${DEPLOY_DIR}"
 
-if [ ! -d "${DEPLOY_DIR}" ]; then
-    git clone "${GIT_DIR}" "${DEPLOY_DIR}"
-else
-    cd "${DEPLOY_DIR}"
-    git pull origin "${BRANCH}"
-fi
+# Ensure deploy directory exists
+mkdir -p "${DEPLOY_DIR}"
+
+# Checkout latest code into working tree
+git --work-tree="${DEPLOY_DIR}" --git-dir="${GIT_DIR}" checkout -f "${BRANCH}"
 
 cd "${DEPLOY_DIR}"
 
 # Activate virtual environment
-source venv/bin/activate
+if [ ! -d "${VENV_DIR}" ]; then
+    echo "❌ Virtualenv not found at ${VENV_DIR}"
+    exit 1
+fi
 
-pip install -r requirements.txt
-python3 manage.py collectstatic --noinput
-python3 manage.py makemigrations --noinput
-python3 manage.py migrate --noinput
+echo "📦 Installing dependencies"
+"${PIP}" install -r requirements.txt
 
-deactivate
+echo "🎨 Collecting static files"
+"${PYTHON}" manage.py collectstatic --noinput
 
-# Restart service
+echo "🧩 Running migrations"
+"${PYTHON}" manage.py migrate --noinput
+
+# Reload daemon
+echo "🔄 Reloading daemon"
 sudo systemctl daemon-reload
+
+# Restart service (NO sudo in hooks)
+echo "🔄 Restarting ${SERVICE_NAME}"
 sudo systemctl restart "${SERVICE_NAME}"
 
-echo "Deployment of ${REPO_NAME} completed successfully."
+echo "✅ Deployment completed successfully"
 ```
 
 Make this script executable:
