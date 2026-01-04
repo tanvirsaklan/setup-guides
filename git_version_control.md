@@ -59,7 +59,7 @@ cd "${DEPLOY_DIR}"
 # Activate virtual environment
 if [ ! -d "${VENV_DIR}" ]; then
     echo "❌ Virtualenv not found at ${VENV_DIR}"
-    exit 1
+    python3 -m venv venv
 fi
 
 echo "📦 Installing dependencies"
