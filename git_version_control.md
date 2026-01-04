@@ -69,6 +69,9 @@ echo "🎨 Collecting static files"
 "${PYTHON}" manage.py collectstatic --noinput
 
 echo "🧩 Running migrations"
+"${PYTHON}" manage.py makemigrations --noinput
+
+echo "🧩 Running migrations"
 "${PYTHON}" manage.py migrate --noinput
 
 # Reload daemon
