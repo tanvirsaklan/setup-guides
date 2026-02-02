@@ -35,8 +35,8 @@ If you want to auto-deploy your code with every push, then edit `sudo nano /srv/
 set -e
 
 # ===== CONFIG =====
-REPO_NAME="mse"
-USER_NAME="uch"
+REPO_NAME="repo_name"
+USER_NAME="username"
 DEPLOY_DIR="/home/${USER_NAME}/${REPO_NAME}"
 GIT_DIR="/home/${USER_NAME}/github/${REPO_NAME}.git"
 SERVICE_NAME="${REPO_NAME}.service"
