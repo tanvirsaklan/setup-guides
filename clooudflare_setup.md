@@ -74,7 +74,7 @@ ingress:
 
   # Add as many sub-domains as you want, just change the port numbers (8002,8003...)
 
-  # Default fallback
+  # Default fallback; Required - else error will occur
   - service: http_status:404
 ```
 Save.
