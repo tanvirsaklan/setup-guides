@@ -1,4 +1,4 @@
-# Prorject: TalkiePanda
+# Prorject: TokiPanda
 ## Technical Objective
 A robot is built for teaching kids some learning materials through a series of interactive sessions. It includes an audio interface for interacting with the robot. 
 ### Audio streaming and learning sessions
@@ -130,7 +130,6 @@ erDiagram
     LESSON {
         int id PK
         string subject
-        string age_group
         string routine_date
     }
     QUESTION {
