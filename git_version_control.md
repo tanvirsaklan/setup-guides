@@ -170,6 +170,6 @@ You are all-set.
 
 # Conclusion 🔴
   
-This is a minimal CI/CD pipeline that i follow. Suggest improvements via email/forking.
+This is a minimal CI/CD pipeline that I follow. Suggest improvements via email/forking.
   
 @2025 All Rights Reserved . Tanvir Saklan
