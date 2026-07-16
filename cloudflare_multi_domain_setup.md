@@ -109,7 +109,7 @@ You should see your tunnel status is `Healthy` in the browser.
 
 ---
 
-#### 🔗 Prepare your apps (Gunicorn/Uvicorn Workers)
+#### 🔗 Prepare your django apps (Gunicorn/Uvicorn Workers)
 
 Create a gunicorn service file: `sudo nano /etc/systemd/system/project.service`
   

@@ -78,3 +78,38 @@ yt-dlp -f 'bv+ba/b' -P "~/Videos" --merge-output-format mp4 "$1"
 yt-dlp -f 'bv+ba/b' -P "~/Videos" --yes-playlist \
 -o "%(playlist_title)s/%(playlist_index)s - %(title)s.%(ext)s" "$1"
 ```
+
+
+### Git custom commit message
+
+```bash
+mkdir -p ~/.config/git/hooks
+git config --global core.hooksPath ~/.config/git/hooks
+nano ~/.config/git/hooks/prepare-commit-msg
+
+#########################################
+
+#!/bin/bash
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+
+# Intercept command line (-m) or standard editor commits
+if [ "$COMMIT_SOURCE" = "message" ] || [ -z "$COMMIT_SOURCE" ]; then
+    TIMESTAMP=$(date +%Y-%m-%d-%H-%M-%S)
+    GIT_USER=$(git config user.name)
+    GIT_USER=${GIT_USER:-"UnknownUser"}
+    ORIGINAL_MSG=$(cat "$COMMIT_MSG_FILE")
+    
+    # Prevent duplicate prepending
+    if [[ ! "$ORIGINAL_MSG" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2} ]]; then
+        NEW_MSG="${TIMESTAMP}: ${GIT_USER}: ${ORIGINAL_MSG}"
+        echo "$NEW_MSG" > "$COMMIT_MSG_FILE"
+    fi
+fi
+
+##########################################
+
+chmod +x ~/.config/git/hooks/prepare-commit-msg
+# Use `git commit -m "Commit message" --no-verify` while message formatting is not preferable.
+```
