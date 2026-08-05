@@ -111,6 +111,14 @@ EOF
 sudo mv /tmp/playlist /usr/bin/playlist
 sudo chmod +x /usr/bin/playlist
 
+# Write /usr/bin/reel
+sudo cat << 'EOF' > /tmp/reel
+#!/bin/bash
+yt-dlp -f "bv*[vcodec^=avc1]+ba[acodec^=mp4a]/b" -P "~/Videos/reels" $1
+EOF
+sudo mv /tmp/reel /usr/bin/reel
+sudo chmod +x /usr/bin/reel
+
 echo "✅ Machine setup successful! Verify tool versions below:"
 rustc --version
 cargo --version
