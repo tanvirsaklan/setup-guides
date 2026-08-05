@@ -119,7 +119,19 @@ EOF
 sudo mv /tmp/reel /usr/bin/reel
 sudo chmod +x /usr/bin/reel
 
+
+# ==============================================================================
+# PostgreSQL install
+# ==============================================================================
+sudo apt install postgresql postgresql-contrib
+echo "Postgresql successfully installed"
+sudo snap install postman
+echo "Postman successfully installed"
+
+
+
 echo "✅ Machine setup successful! Verify tool versions below:"
 rustc --version
 cargo --version
 nginx -v
+psql --version
