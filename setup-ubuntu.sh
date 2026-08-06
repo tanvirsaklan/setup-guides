@@ -123,8 +123,14 @@ sudo chmod +x /usr/bin/reel
 # ==============================================================================
 # PostgreSQL install
 # ==============================================================================
+echo "Installing Postgresql"
 sudo apt install postgresql postgresql-contrib
 echo "Postgresql successfully installed"
+
+# ==============================================================================
+# PostgreSQL install
+# ==============================================================================
+echo "Installing Postman"
 sudo snap install postman
 echo "Postman successfully installed"
 
